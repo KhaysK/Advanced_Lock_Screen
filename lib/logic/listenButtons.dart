@@ -3,58 +3,59 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ListenButtons{
   final _storage = SharedPreferences.getInstance();
-  var _tmpS = "";
+  var _tmpOperation = "";
   var _choiceDone = false;
 
   // Экран выбора кнопок - начало
   void onClickOne() {
-    Globals.arrPassword.add(1);
+    arrPassword.add(1);
   }
 
   void onClickTwo (){
-    Globals.arrPassword.add(2);
+    arrPassword.add(2);
   }
 
   void onClickThree (){
-    Globals.arrPassword.add(3);
+    arrPassword.add(3);
   }
 
   void onClickFour (){
-    Globals.arrPassword.add(4);
+    arrPassword.add(4);
   }
 
   void onClickFive (){
-    Globals.arrPassword.add(5);
+    arrPassword.add(5);
   }
 
   void onClickSix (){
-    Globals.arrPassword.add(6);
+    arrPassword.add(6);
   }
 
   void onClickSeven (){
-    Globals.arrPassword.add(7);
+    arrPassword.add(7);
   }
 
   void onClickEight (){
-    Globals.arrPassword.add(8);
+    arrPassword.add(8);
   }
 
   void onClickNine (){
-    Globals.arrPassword.add(9);
+    arrPassword.add(9);
   }
 
   void onClickZero (){
-    Globals.arrPassword.add(0);
+    arrPassword.add(0);
   }
 
   void onClockAgain (){
-    Globals.arrPassword.clear();
+    arrPassword.clear();
   }
 
   Future<void> onClockNext () async{
     final storage = await _storage;
-    Globals.arrPassword.forEach((element) => _tmpS += element.toString());
-    storage.setString(Globals.BUTTONS, _tmpS);
+    var tmpS = "";
+    arrPassword.forEach((element) => tmpS += element.toString());
+    storage.setString(BUTTONS, tmpS);
   }
   // Экран выбора кнопок - конец
 
@@ -62,26 +63,32 @@ abstract class ListenButtons{
   // Экран выбора ареф-й операции - начало
   void onClickMULTIPLY (){
     _choiceDone = true;
-    _tmpS = Globals.MULTIPLY;
+    _tmpOperation = MULTIPLY;
   }
 
   void onClickADDITION (){
     _choiceDone = true;
-    _tmpS = Globals.ADDITION;
+    _tmpOperation = ADDITION;
   }
 
   void onClickSUBTRACTION (){
     _choiceDone = true;
-    _tmpS = Globals.SUBTRACTION;
+    _tmpOperation = SUBTRACTION;
   }
 
   void onClickDIVISION (){
     _choiceDone = true;
-    _tmpS = Globals.DIVISION;
+    _tmpOperation = DIVISION;
   }
 
-  void onClickFinish(){
-
+  void onClickFinish(String value) async{
+    if(!_choiceDone) return;
+    if(value.isNotEmpty && isNumeric(value)){
+      final storage = await _storage;
+      storage.setString(OPERATION, _tmpOperation);
+      storage.setInt(USER_NUMBER, int.parse(value));
+    }
+    return;
   }
   // Экран выбора ареф-й операции - конец
 

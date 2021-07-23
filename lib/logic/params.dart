@@ -1,10 +1,19 @@
-abstract class Globals{
-  static List<int> arrPassword = [];
-  static String BUTTONS = "BUTTONS";
-  static String OPERATION = "OPERATION"; // для сохранения выбранной арефметической операции
-  static String MULTIPLY = "MULTIPLY";
-  static String ADDITION = "ADDITION";
-  static String DIVISION = "DIVISION";
-  static String SUBTRACTION = "SUBTRACTION";
-  static String USER_NUMBER = "USER_NUMBER"; // для сохранения введённого числа пользователя
+final List<int> arrPassword = [];
+final String BUTTONS = "BUTTONS";
+final String OPERATION ="OPERATION"; // для сохранения выбранной арефметической операции
+final String MULTIPLY = "MULTIPLY";
+final String ADDITION = "ADDITION";
+final String DIVISION = "DIVISION";
+final String SUBTRACTION = "SUBTRACTION";
+final String USER_NUMBER =
+    "USER_NUMBER"; // для сохранения введённого числа пользователя
+
+bool isNumeric(String str) {
+  try {
+    double.parse(str);
+  } on FormatException {
+    return false;
+  } finally {
+    return true;
+  }
 }
