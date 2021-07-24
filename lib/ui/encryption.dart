@@ -1,9 +1,12 @@
 import 'package:advanced_lockscreen/custom_widgets/custom_button.dart';
 import 'package:advanced_lockscreen/custom_widgets/custom_radio_button.dart';
+import 'package:advanced_lockscreen/logic/listen_buttons.dart';
 import 'package:flutter/material.dart';
 
 class Encryption extends StatelessWidget {
-  const Encryption({Key? key}) : super(key: key);
+  Encryption({Key? key}) : super(key: key);
+  final _listener = ListenButtons();
+  TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +43,7 @@ class Encryption extends StatelessWidget {
               padding: EdgeInsets.only(
                   left: MediaQuery.of(context).size.width * 0.30),
               child: Column(
-                children: <Widget>[
+                children: <Widget>[/*
                   const RadioCustom(
                       value: "Multiply",
                       groupValue: "groupValue",
@@ -56,13 +59,14 @@ class Encryption extends StatelessWidget {
                   const RadioCustom(
                       value: "Divide",
                       groupValue: "groupValue",
-                      text: "Делить"),
+                      text: "Делить"),*/
                   const SizedBox(height: 20.0),
                   Padding(
                     padding: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width * 0.30),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
                           hintText: "Введите число",
                           border: OutlineInputBorder()),
                       maxLength: 3,
@@ -92,6 +96,7 @@ class Encryption extends StatelessWidget {
             child: ButtonCustom(
               text: "ЗАВЕРШИТЬ НАСТРОЙКУ",
               width: 250.0,
+              onTap: () => _listener.onClickFinish(_passwordController.text),
             ),
           ),
         ],

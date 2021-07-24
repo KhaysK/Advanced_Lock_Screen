@@ -53,7 +53,7 @@ class LockScreen extends StatelessWidget {
                   mainAxisExtent: 35.0,
                   crossAxisSpacing: 35.0,
                 ),
-                itemBuilder: (context, index) => ButtonCustom(text: "TEST"),
+                itemBuilder: (context, index) => ButtonCustom(text: "TEST", onTap: () => debugPrint("s"),),
               ),
             ),
           )

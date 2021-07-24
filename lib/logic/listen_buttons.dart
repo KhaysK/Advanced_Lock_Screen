@@ -1,57 +1,77 @@
 import 'package:advanced_lockscreen/logic/params.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class ListenButtons{
+class ListenButtons {
   final _storage = SharedPreferences.getInstance();
   var _tmpOperation = "";
   var _choiceDone = false;
-
+  String password = "";
   // Экран выбора кнопок - начало
   void onClickOne() {
     arrPassword.add(1);
+    password += '1';
+    debugPrint("1");
   }
 
-  void onClickTwo (){
+  void onClickTwo() {
     arrPassword.add(2);
+    password += '2';
+    debugPrint("1");
   }
 
-  void onClickThree (){
+  void onClickThree() {
     arrPassword.add(3);
+    password += '3';
+    debugPrint("1");
   }
 
-  void onClickFour (){
+  void onClickFour() {
     arrPassword.add(4);
+    password += '4';
+    debugPrint("1");
   }
 
-  void onClickFive (){
+  void onClickFive() {
     arrPassword.add(5);
+    password += '5';
+    debugPrint("1");
   }
 
-  void onClickSix (){
+  void onClickSix() {
     arrPassword.add(6);
+    password += '6';
+    debugPrint("1");
   }
 
-  void onClickSeven (){
+  void onClickSeven() {
     arrPassword.add(7);
+    password += '7';
+    debugPrint("1");
   }
 
-  void onClickEight (){
+  void onClickEight() {
     arrPassword.add(8);
+    password += '8';
+    debugPrint("1");
   }
 
-  void onClickNine (){
+  void onClickNine() {
     arrPassword.add(9);
+    password += '9';
   }
 
-  void onClickZero (){
+  void onClickZero() {
     arrPassword.add(0);
+    password += '0';
   }
 
-  void onClockAgain (){
+  void onClickClear() {
     arrPassword.clear();
+    password = "";
   }
 
-  Future<void> onClockNext () async{
+  Future<void> onClockNext() async {
     final storage = await _storage;
     var tmpS = "";
     arrPassword.forEach((element) => tmpS += element.toString());
@@ -59,31 +79,30 @@ abstract class ListenButtons{
   }
   // Экран выбора кнопок - конец
 
-
   // Экран выбора ареф-й операции - начало
-  void onClickMULTIPLY (){
+  void onClickMULTIPLY() {
     _choiceDone = true;
     _tmpOperation = MULTIPLY;
   }
 
-  void onClickADDITION (){
+  void onClickADDITION() {
     _choiceDone = true;
     _tmpOperation = ADDITION;
   }
 
-  void onClickSUBTRACTION (){
+  void onClickSUBTRACTION() {
     _choiceDone = true;
     _tmpOperation = SUBTRACTION;
   }
 
-  void onClickDIVISION (){
+  void onClickDIVISION() {
     _choiceDone = true;
     _tmpOperation = DIVISION;
   }
 
-  void onClickFinish(String value) async{
-    if(!_choiceDone) return;
-    if(value.isNotEmpty && isNumeric(value)){
+  void onClickFinish(String value) async {
+    if (!_choiceDone) return;
+    if (value.isNotEmpty && isNumeric(value)) {
       final storage = await _storage;
       storage.setString(OPERATION, _tmpOperation);
       storage.setInt(USER_NUMBER, int.parse(value));
@@ -91,7 +110,4 @@ abstract class ListenButtons{
     return;
   }
   // Экран выбора ареф-й операции - конец
-
 }
-
-

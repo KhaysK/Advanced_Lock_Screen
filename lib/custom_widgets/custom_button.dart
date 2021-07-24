@@ -4,7 +4,8 @@ class ButtonCustom extends StatelessWidget {
   final String text;
   double width;
   double height;
-  ButtonCustom({Key? key, required this.text, this.width = 100.0, this.height = 35.0}) : super(key: key);
+  final Function onTap;
+  ButtonCustom({Key? key, required this.text, this.width = 100.0, this.height = 35.0, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,8 @@ class ButtonCustom extends StatelessWidget {
             ]
         ),
       ),
-      onTap: () => debugPrint("Button tapped..."),
+      onTap: () => onTap,
+      splashColor: Colors.grey,
     );
   }
 }
