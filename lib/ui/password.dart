@@ -2,9 +2,16 @@ import 'package:advanced_lockscreen/custom_widgets/custom_button.dart';
 import 'package:advanced_lockscreen/logic/listen_buttons.dart';
 import 'package:flutter/material.dart';
 
-class PasswordScreen extends StatelessWidget {
+class PasswordScreen extends StatefulWidget {
   PasswordScreen({Key? key}) : super(key: key);
+
+  @override
+  State<PasswordScreen> createState() => _PasswordScreenState();
+}
+
+class _PasswordScreenState extends State<PasswordScreen> {
   final _listener = ListenButtons();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,18 +55,28 @@ class PasswordScreen extends StatelessWidget {
 
                 // Вот кнопки и вызов соответствующих функций
                 children: [
-                  ButtonCustom(text: "", onTap: () => _listener.onClickTwo(),),
-                  ButtonCustom(text: "", onTap: () => _listener.onClickTwo(),),
-                  ButtonCustom(text: "", onTap: () => _listener.onClickThree(),),
-                  ButtonCustom(text: "", onTap: () => _listener.onClickFour(),),
-                  ButtonCustom(text: "", onTap: () => _listener.onClickFive(),),
-                  ButtonCustom(text: "", onTap: () => _listener.onClickSix(),),
-                  ButtonCustom(text: "", onTap: () => _listener.onClickSeven(),),
-                  ButtonCustom(text: "", onTap: () => _listener.onClickEight(),),
-                  ButtonCustom(text: "", onTap: () => _listener.onClickNine(),),
-                  ButtonCustom(text: "CLEAR", onTap: () => _listener.onClickClear()),
-                  ButtonCustom(text: "", onTap: () => _listener.onClickZero(),),
-                  ButtonCustom(text: "NEXT", onTap: () => _listener.onClockNext(),)
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickOne();});},),
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickTwo();});},),
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickThree();});},),
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickFour();});},),
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickFive();});},),
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickSix();});},),
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickSeven();});},),
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickEight();});},),
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickNine();});},),
+                  ButtonCustom(text: "CLEAR", onTap: () {setState((){ _listener.onClickClear();});},),
+                  ButtonCustom(text: "", isActive: _listener.password.length < 5 ? true:false ,
+                    onTap: () {setState((){ _listener.onClickZero();});},),
+                  ButtonCustom(text: "NEXT", onTap: () {setState((){ _listener.onClockNext();});},),
                 ],
               ),
             ),

@@ -1,11 +1,14 @@
+import 'package:advanced_lockscreen/logic/listen_buttons.dart';
 import 'package:flutter/material.dart';
 
 class ButtonCustom extends StatelessWidget {
   final String text;
-  double width;
-  double height;
-  final Function onTap;
-  ButtonCustom({Key? key, required this.text, this.width = 100.0, this.height = 35.0, required this.onTap}) : super(key: key);
+  final double width;
+  final double height;
+  final bool isActive;
+  final VoidCallback onTap;
+
+  ButtonCustom({Key? key, required this.text, this.width = 100.0, this.height = 35.0, required this.onTap, this.isActive = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class ButtonCustom extends StatelessWidget {
           ),
         ),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: isActive ? Colors.white : Colors.grey,
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
@@ -35,7 +38,7 @@ class ButtonCustom extends StatelessWidget {
             ]
         ),
       ),
-      onTap: () => onTap,
+      onTap: isActive ? onTap : null,
       splashColor: Colors.grey,
     );
   }

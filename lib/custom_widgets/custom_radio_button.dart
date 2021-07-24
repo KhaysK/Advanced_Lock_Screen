@@ -4,7 +4,7 @@ class RadioCustom extends StatelessWidget {
   final value;
   final groupValue;
   final String text;
-  final VoidCallback onChanged;
+  final Function onChanged;
 
   const RadioCustom({Key? key, required this.value, required this.groupValue, required this.text, required this.onChanged}) : super(key: key);
 
@@ -12,11 +12,11 @@ class RadioCustom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        /*Radio(
+        Radio(
             value: value,
             groupValue: groupValue,
-            onChanged: (val) => onChanged,
-        ),*/
+            onChanged: onChanged(),
+        ),
         SizedBox(width: 5.0),
         Text(text)
       ],

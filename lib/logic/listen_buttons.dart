@@ -11,49 +11,41 @@ class ListenButtons {
   void onClickOne() {
     arrPassword.add(1);
     password += '1';
-    debugPrint("1");
   }
 
   void onClickTwo() {
     arrPassword.add(2);
     password += '2';
-    debugPrint("1");
   }
 
   void onClickThree() {
     arrPassword.add(3);
     password += '3';
-    debugPrint("1");
   }
 
   void onClickFour() {
     arrPassword.add(4);
     password += '4';
-    debugPrint("1");
   }
 
   void onClickFive() {
     arrPassword.add(5);
     password += '5';
-    debugPrint("1");
   }
 
   void onClickSix() {
     arrPassword.add(6);
     password += '6';
-    debugPrint("1");
   }
 
   void onClickSeven() {
     arrPassword.add(7);
     password += '7';
-    debugPrint("1");
   }
 
   void onClickEight() {
     arrPassword.add(8);
     password += '8';
-    debugPrint("1");
   }
 
   void onClickNine() {
