@@ -4,7 +4,13 @@ import 'package:advanced_lockscreen/ui/password.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-       MaterialApp(home: PasswordScreen(), debugShowCheckedModeBanner: false));
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    initialRoute: '/',
+    routes: {
+      "/": (context) => LockScreen(),
+      "/password": (context) => PasswordScreen(),
+      "/encryption": (context) => Encryption(),
+    },
+  ));
 }
-

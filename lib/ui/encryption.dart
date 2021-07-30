@@ -1,15 +1,28 @@
 import 'package:advanced_lockscreen/custom_widgets/custom_button.dart';
-import 'package:advanced_lockscreen/custom_widgets/custom_radio_button.dart';
 import 'package:advanced_lockscreen/logic/listen_buttons.dart';
+import 'package:advanced_lockscreen/logic/params.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class Encryption extends StatelessWidget {
+class Encryption extends StatefulWidget {
   Encryption({Key? key}) : super(key: key);
+
+  @override
+  _EncryptionState createState() => _EncryptionState();
+}
+
+class _EncryptionState extends State<Encryption> {
   final _listener = ListenButtons();
+  var _groupValue = "";
+  bool _choiceDone = false;
+
   TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text(
           "LockScreen",
@@ -43,24 +56,72 @@ class Encryption extends StatelessWidget {
               padding: EdgeInsets.only(
                   left: MediaQuery.of(context).size.width * 0.30),
               child: Column(
-                children: <Widget>[/*
-                  const RadioCustom(
-                      value: "Multiply",
-                      groupValue: "groupValue",
-                      text: "Умножить"),
-                  const RadioCustom(
-                      value: "Add",
-                      groupValue: "groupValue",
-                      text: "Прибавить"),
-                  const RadioCustom(
-                      value: "Subtract",
-                      groupValue: "groupValue",
-                      text: "Отнять"),
-                  const RadioCustom(
-                      value: "Divide",
-                      groupValue: "groupValue",
-                      text: "Делить"),*/
-                  const SizedBox(height: 20.0),
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Radio(
+                          value: MULTIPLY,
+                          groupValue: _groupValue,
+                          onChanged: (T) {
+                            setState(() {
+                              _groupValue = T.toString();
+                              _listener.onClickMULTIPLY();
+                              _choiceDone = true;
+                            });
+                          }),
+                      SizedBox(width: 5.0),
+                      Text(MULTIPLY),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Radio(
+                          value: ADDITION,
+                          groupValue: _groupValue,
+                          onChanged: (T) {
+                            setState(() {
+                              _choiceDone = true;
+                              _groupValue = T.toString();
+                              _listener.onClickADDITION();
+                            });
+                          }),
+                      SizedBox(width: 5.0),
+                      Text(ADDITION),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Radio(
+                          value: SUBTRACTION,
+                          groupValue: _groupValue,
+                          onChanged: (T) {
+                            setState(() {
+                              _choiceDone = true;
+                              _groupValue = T.toString();
+                              _listener.onClickSUBTRACTION();
+                            });
+                          }),
+                      SizedBox(width: 5.0),
+                      Text(SUBTRACTION),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Radio(
+                          value: DIVISION,
+                          groupValue: _groupValue,
+                          onChanged: (T) {
+                            setState(() {
+                              _choiceDone = true;
+                              _groupValue = T.toString();
+                              _listener.onClickDIVISION();
+                            });
+                          }),
+                      SizedBox(width: 5.0),
+                      Text(DIVISION),
+                    ],
+                  ),
+                  const SizedBox(height: 10.0),
                   Padding(
                     padding: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width * 0.30),
@@ -70,6 +131,7 @@ class Encryption extends StatelessWidget {
                           hintText: "Введите число",
                           border: OutlineInputBorder()),
                       maxLength: 3,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       keyboardType: TextInputType.number,
                     ),
                   ),
@@ -96,11 +158,26 @@ class Encryption extends StatelessWidget {
             child: ButtonCustom(
               text: "ЗАВЕРШИТЬ НАСТРОЙКУ",
               width: 250.0,
-              onTap: () => _listener.onClickFinish(_passwordController.text),
+              shapeCircle: false,
+              onTap: () {
+                _listener.onClickFinish(_passwordController.text);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/', (Route<dynamic> route) => false);
+              },
             ),
           ),
         ],
       ),
     );
+  }
+
+  bool _isNumeric(String str) {
+    try {
+      double.parse(str);
+    } on FormatException {
+      return false;
+    } finally {
+      return true;
+    }
   }
 }
