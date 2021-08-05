@@ -4,6 +4,8 @@ import 'package:advanced_lockscreen/logic/params.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 class LockScreen extends StatefulWidget {
   const LockScreen({Key? key}) : super(key: key);
@@ -34,7 +36,6 @@ class _LockScreenState extends State<LockScreen> {
   @override
   void initState() {
     _fillButtons.shuffle();
-    //_test_pref();
     _check_storage();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -69,10 +70,23 @@ class _LockScreenState extends State<LockScreen> {
               }).toList();
             },
             onSelected: (String choice) {
-              if (choice == changePassword) {
-                PASSWORD = "";
-                Navigator.pushNamed(context, "/password");
-              }
+              setState(() {
+                if(_check_password(PASSWORD)[1] == "CORRECT"){
+                  if (choice == changePassword) {
+                    PASSWORD = "";
+                    Navigator.pushNamed(context, "/password");
+                  }
+                }
+                else {
+                  Fluttertoast.showToast(
+                      msg: "Для создания нового, введите текущий пин-код",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      fontSize: 16.0
+                  );
+                }
+              });
             },
           ),
         ],
@@ -220,7 +234,7 @@ class _LockScreenState extends State<LockScreen> {
 
   dynamic _check_password(String password) {
     if (password.length >= 5) {
-      String tmpS = "";
+      List<int> tmpArr = [];
       Map<int, String> map = {
         1: _fillButtons[0],
         2: _fillButtons[1],
@@ -235,35 +249,35 @@ class _LockScreenState extends State<LockScreen> {
       };
       var q = 0;
       for (var i in _arrPassword) {
-        _arrPassword[q] = int.parse(map[i].toString());
+        tmpArr.add(int.parse(map[i].toString()));
         switch (_operation) {
           case "MULTIPLY":
-            _arrPassword[q] = _arrPassword[q] * _num_user;
+            tmpArr[q] = tmpArr[q] * _num_user;
             break;
           case "ADDITION":
-            _arrPassword[q] = _arrPassword[q] + _num_user;
+            tmpArr[q] = tmpArr[q] + _num_user;
             break;
           case "DIVISION":
-            _arrPassword[q] = _arrPassword[q] ~/ _num_user;
+            tmpArr[q] = tmpArr[q] ~/ _num_user;
             break;
           case "SUBTRACTION":
-            _arrPassword[q] = _arrPassword[q] - _num_user;
+            tmpArr[q] = tmpArr[q] - _num_user;
             break;
         }
-        int num = _arrPassword[q];
+        int num = tmpArr[q];
         if (num < 0) {
           num *= -1;
-          _arrPassword[q] = num;
+          tmpArr[q] = num;
         } else if (num > 9) {
           var s = num.toString();
           num = int.parse(s[s.length - 1]);
-          _arrPassword[q] = num;
+          tmpArr[q] = num;
         }
         q++;
       }
 
-      _arrPassword.forEach((element) => tmpS += element.toString());
-      _arrPassword.clear();
+      String tmpS = "";
+      tmpArr.forEach((element) => tmpS += element.toString());
       if (password == tmpS) return [false, "CORRECT"];
       return [false, "INCORRECT"];
     }
@@ -276,7 +290,6 @@ class _LockScreenState extends State<LockScreen> {
     if (tmpS != null) {
       _operation = storage.getString(OPERATION)!;
       _num_user = storage.getInt(USER_NUMBER)!;
-      _arrPassword.clear();
       for (int i = 0; i < tmpS.length; i++)
         _arrPassword.add(int.parse(tmpS[i]));
     }
@@ -284,10 +297,4 @@ class _LockScreenState extends State<LockScreen> {
       Navigator.pushNamedAndRemoveUntil(context, "/password", (route) => false);
   }
 
-  Future<void> _test_pref() async {
-    final storage = await _storage;
-    await storage.setString(BUTTONS, "13795");
-    await storage.setString(OPERATION, ADDITION);
-    await storage.setInt(USER_NUMBER, 2);
-  }
 }
