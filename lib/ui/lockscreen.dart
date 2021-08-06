@@ -203,6 +203,7 @@ class _LockScreenState extends State<LockScreen> {
                     onTap: () {
                       setState(() {
                         _listener.onClickAgain();
+                        _fillButtons.shuffle();
                       });
                     },
                   ),
@@ -269,16 +270,16 @@ class _LockScreenState extends State<LockScreen> {
           num *= -1;
           tmpArr[q] = num;
         } else if (num > 9) {
-          var s = num.toString();
-          num = int.parse(s[s.length - 1]);
-          tmpArr[q] = num;
+          tmpArr[q] = num%10;
         }
         q++;
       }
 
       String tmpS = "";
       tmpArr.forEach((element) => tmpS += element.toString());
-      if (password == tmpS) return [false, "CORRECT"];
+      if (password == tmpS) {
+        return [false, "CORRECT"];
+      }
       return [false, "INCORRECT"];
     }
     return [true, password];
