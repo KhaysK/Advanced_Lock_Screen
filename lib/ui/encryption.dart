@@ -3,7 +3,6 @@ import 'package:advanced_lockscreen/logic/listen_buttons.dart';
 import 'package:advanced_lockscreen/logic/params.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Encryption extends StatefulWidget {
   Encryption({Key? key}) : super(key: key);
@@ -158,7 +157,7 @@ class _EncryptionState extends State<Encryption> {
             child: ButtonCustom(
               text: "ЗАВЕРШИТЬ НАСТРОЙКУ",
               width: 250.0,
-              shapeCircle: false,
+              isShapeCircle: false,
               onTap: () {
                 _listener.onClickFinish(_passwordController.text);
                 Navigator.of(context).pushNamedAndRemoveUntil(

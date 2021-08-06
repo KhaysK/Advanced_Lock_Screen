@@ -233,7 +233,7 @@ class _LockScreenState extends State<LockScreen> {
     );
   }
 
-  dynamic _check_password(String password) {
+  List _check_password(String password) {
     if (password.length >= 5) {
       List<int> tmpArr = [];
       Map<int, String> map = {
@@ -285,7 +285,7 @@ class _LockScreenState extends State<LockScreen> {
     return [true, password];
   }
 
-  Future<void> _check_storage() async {
+  void _check_storage() async {
     final storage = await _storage;
     String? tmpS = storage.getString(BUTTONS);
     if (tmpS != null) {
